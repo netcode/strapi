@@ -58,6 +58,8 @@ module.exports = {
 
     await generateAPI(slug, contentType);
 
+    await generateReversedRelations(body.attributes);
+
     // create relations
     strapi.reload();
 
@@ -69,6 +71,16 @@ module.exports = {
   },
 };
 
+const generateReversedRelations = attributes => {
+  Object.keys(attributes)
+    .filter(key => attributes[key].type === 'relation')
+    .forEach(key => {
+      const attr = attributes[key];
+
+      console.log(attr);
+    });
+};
+
 const formatContentType = contentType => {
   const { uid, plugin, connection, collectionName, info } = contentType;
 
@@ -76,7 +88,6 @@ const formatContentType = contentType => {
     uid,
     plugin,
     schema: {
-      icon: _.get(info, 'icon'),
       name: _.get(info, 'name') || _.upperFirst(pluralize(uid)),
       description: _.get(info, 'description', ''),
       connection,
