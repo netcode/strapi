@@ -55,7 +55,6 @@ const formatAttribute = (key, attribute, { model }) => {
     };
   } else {
     return {
-      type: 'relation',
       nature: relation.nature,
       target: toUID(targetEntity, plugin),
       plugin: plugin || undefined,
